@@ -29,6 +29,6 @@ class CustomFormField extends StatelessWidget {
         ),
         obscureText: obscureText ?? false,
         obscuringCharacter: "*",
-        keyboardType: keyboardType,
+        keyboardType: keyboardType
     );
   }}

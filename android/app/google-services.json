@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976214399132",
+    "project_id": "betterbee-eb5e8",
+    "storage_bucket": "betterbee-eb5e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976214399132:android:4391ecb1fb51cf12643559",
+        "android_client_info": {
+          "package_name": "com.betterlife.betterbee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf6Q9HZ2zx6bzX7LgObTUJ5tInsTJV8SU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

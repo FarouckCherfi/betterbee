@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:betterbee/views/SignUp.dart';
+import 'package:betterbee/views/SignIn.dart';
 
 void main() {
   runApp(const MyApp());
