@@ -1,7 +1,9 @@
+import 'package:betterbee/components/CustomButton.dart';
 import 'package:betterbee/components/CustomFormField.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:betterbee/views/SignUp.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,27 +34,29 @@ class FormSignIn extends StatefulWidget {
   const FormSignIn({super.key});
 
   @override
-  State<FormSignIn> createState() => _FormSignUp();
+  State<FormSignIn> createState() => _FormSignIn();
 }
 
-class _FormSignUp extends State<FormSignIn> {
+class _FormSignIn extends State<FormSignIn> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 250, left: 10, right: 10),
+        padding: const EdgeInsets.only(top: 190, left: 10, right: 10),
         child: Form(
             key: _formKey,
             child: ListView(key: UniqueKey(), children: [
               const CustomFormField(
                   labelText: "Mail", keyboardType: TextInputType.emailAddress),
-              const Padding(padding: EdgeInsets.only(bottom: 15)),
+              const Padding(padding: EdgeInsets.only(bottom: 25)),
               const CustomFormField(
                   labelText: "Password",
                   obscureText: true,
                   keyboardType: TextInputType.visiblePassword),
-              const Padding(padding: EdgeInsets.only(bottom: 15)),
+              const Padding(padding: EdgeInsets.only(bottom: 25)),
+              CustomButton(text: "Login", onPressed: () => ()),
+              const Padding(padding: EdgeInsets.only(bottom: 40)),
               SignInWithAppleButton(
                 onPressed: () async {
                   final credential = await SignInWithApple.getAppleIDCredential(
@@ -65,6 +69,30 @@ class _FormSignUp extends State<FormSignIn> {
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Don't have an account?"),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CreateAccountPage()));
+                    },
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          color: Colors.amber,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  )
+                ],
+              )
             ])));
   }
 }
