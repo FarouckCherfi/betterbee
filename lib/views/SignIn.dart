@@ -1,9 +1,9 @@
 import 'package:betterbee/components/CustomButton.dart';
 import 'package:betterbee/components/CustomFormField.dart';
+import 'package:betterbee/user_auth/firebase_auth/firebase_auth_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:betterbee/views/SignUp.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,13 +32,23 @@ class _LoginPage extends State<LoginPage> {
 
 class FormSignIn extends StatefulWidget {
   const FormSignIn({super.key});
-
   @override
   State<FormSignIn> createState() => _FormSignIn();
 }
 
 class _FormSignIn extends State<FormSignIn> {
+  final TextEditingController _mailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FireBaseAuthServices _auth = FireBaseAuthServices();
+
+  @override
+  void dispose() {
+    _mailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +57,45 @@ class _FormSignIn extends State<FormSignIn> {
         child: Form(
             key: _formKey,
             child: ListView(key: UniqueKey(), children: [
-              const CustomFormField(
-                  labelText: "Mail", keyboardType: TextInputType.emailAddress),
+              CustomFormField(
+                  labelText: "Mail",
+                  keyboardType: TextInputType.emailAddress,
+                  controller: _mailController),
               const Padding(padding: EdgeInsets.only(bottom: 25)),
-              const CustomFormField(
+              CustomFormField(
                   labelText: "Password",
                   obscureText: true,
-                  keyboardType: TextInputType.visiblePassword),
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: _passwordController),
               const Padding(padding: EdgeInsets.only(bottom: 25)),
-              CustomButton(text: "Login", onPressed: () => ()),
-              const Padding(padding: EdgeInsets.only(bottom: 40)),
-              SignInWithAppleButton(
-                onPressed: () async {
-                  final credential = await SignInWithApple.getAppleIDCredential(
-                    scopes: [
-                      AppleIDAuthorizationScopes.email,
-                      AppleIDAuthorizationScopes.fullName,
-                    ],
-                  );
-                  print(credential);
-                },
+              CustomButton(
+                text: "Login",
+                onPressed: _signIn,
+                backgroundColor: Colors.amber,
               ),
-              const Padding(padding: EdgeInsets.only(bottom: 15)),
+              const Padding(padding: EdgeInsets.only(bottom: 40)),
+              FilledButton.icon(
+                onPressed: () {},
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(179, 250, 241, 241)),
+                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                icon: const Icon(
+                  // <-- Icon
+                  Icons.download,
+                  size: 24.0,
+                ),
+                label: const Text('Sign in with Google'),
+
+                // <-- Text
+              ),
+              //GoogleSignInButton(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -78,10 +105,7 @@ class _FormSignIn extends State<FormSignIn> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CreateAccountPage()));
+                      Navigator.pushNamed(context, '/signUp');
                     },
                     child: const Text(
                       "Sign Up",
@@ -94,5 +118,26 @@ class _FormSignIn extends State<FormSignIn> {
                 ],
               )
             ])));
+  }
+
+  void _signIn() async {
+    String mail = _mailController.text;
+    String password = _passwordController.text;
+
+    try {
+      await _auth.signInWithEmailAndPassword(mail, password);
+      if (mounted) {
+        Navigator.pushNamed(context, "/home");
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Email or Password is not valid"),
+          backgroundColor: Colors.red,
+        ));
+      }
+    } catch (e) {
+      if (mounted) {}
+    }
   }
 }

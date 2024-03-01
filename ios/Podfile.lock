@@ -10,7 +10,7 @@ PODS:
     - FirebaseAuth (~> 10.20.0)
   - Firebase/CoreOnly (10.20.0):
     - FirebaseCore (= 10.20.0)
-  - firebase_auth (4.17.4):
+  - firebase_auth (4.17.5):
     - Firebase/Auth (= 10.20.0)
     - firebase_core
     - Flutter
@@ -61,15 +61,12 @@ PODS:
   - GTMSessionFetcher/Core (3.3.1)
   - PromisesObjC (2.3.1)
   - RecaptchaInterop (100.0.0)
-  - sign_in_with_apple (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
-  - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
 
 SPEC REPOS:
   trunk:
@@ -95,13 +92,11 @@ EXTERNAL SOURCES:
     :path: Flutter
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
-  sign_in_with_apple:
-    :path: ".symlinks/plugins/sign_in_with_apple/ios"
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
-  firebase_auth: 29a10d4129d53aa690c10dbd838ed1a059ef0c9b
+  firebase_auth: 7351d07504173efaf1fb31fe3ffb73b2c521eae0
   firebase_core: a46c312d8bae4defa3d009b2aa7b5b413aeb394e
   FirebaseAppCheckInterop: 69fc7d8f6a1cbfa973efb8d1723651de30d12525
   FirebaseAuth: 9c5c400d2c3055d8ae3a0284944c86fa95d48dac
@@ -115,7 +110,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

@@ -4,18 +4,20 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const CustomButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
+  final Color backgroundColor;
+
+  const CustomButton(
+      {super.key,
+      required this.text,
+      required this.onPressed,
+      required this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.amber),
+          backgroundColor: MaterialStateProperty.all(backgroundColor),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

@@ -1,7 +1,6 @@
 import 'package:betterbee/components/CustomFormField.dart';
 import 'package:betterbee/components/CustomButton.dart';
 import 'package:betterbee/user_auth/firebase_auth/firebase_auth_services.dart';
-import 'package:betterbee/views/SignIn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -44,14 +43,25 @@ class _FormSignUp extends State<FormSignUp> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  String _errorPassword = "";
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FireBaseAuthServices _auth = FireBaseAuthServices();
+
+  @override
+  void initState() {
+    super.initState();
+    passwordController.addListener(_validatePasswords);
+    confirmPasswordController.addListener(_validatePasswords);
+  }
 
   @override
   void dispose() {
     usernameController.dispose();
     mailController.dispose();
+    passwordController.removeListener(_validatePasswords);
     passwordController.dispose();
+    confirmPasswordController.removeListener(_validatePasswords);
     confirmPasswordController.dispose();
     super.dispose();
   }
@@ -84,8 +94,14 @@ class _FormSignUp extends State<FormSignUp> {
                   obscureText: true,
                   keyboardType: TextInputType.visiblePassword,
                   controller: confirmPasswordController),
-              const Padding(padding: EdgeInsets.only(bottom: 25)),
-              CustomButton(text: "Sign Up", onPressed: _signUp),
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: Text(_errorPassword,
+                      style: const TextStyle(color: Colors.red))),
+              CustomButton(
+                  text: "Sign Up",
+                  onPressed: _signUp,
+                  backgroundColor: Colors.amber),
               const Padding(padding: EdgeInsets.only(bottom: 40)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -96,10 +112,7 @@ class _FormSignUp extends State<FormSignUp> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
+                      Navigator.pushNamed(context, '/signIn');
                     },
                     child: const Text(
                       "Sign In",
@@ -115,23 +128,64 @@ class _FormSignUp extends State<FormSignUp> {
   }
 
   void _signUp() async {
-    String username = usernameController.text;
+    //String username = usernameController.text;
     String mail = mailController.text;
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
 
     if (password != confirmPassword) {
-      print("Passwords do not match");
-      return;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Password are not the same"),
+          backgroundColor: Colors.red,
+        ));
+        return;
+      }
     }
+    try {
+      await _auth.signUpWithEmailAndPassword(mail, password);
+      if (mounted) {
+        Navigator.pushNamed(context, "/signIn");
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      if (e.code == 'weak-password') {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Password is weak"),
+            backgroundColor: Colors.red,
+          ));
+        }
+      }
+      if (e.code == 'email-already-in-use') {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Email already used"),
+            backgroundColor: Colors.red,
+          ));
+        }
+      }
 
-    User? user = await _auth.signUpWithEmailAndPassword(mail, password);
+      if (e.code == 'invalid-email') {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Not a valid email "),
+            backgroundColor: Colors.red,
+          ));
+        }
+      }
+    }
+  }
 
-    if (user != null) {
-      print("User created");
-      Navigator.pushNamed(context, "/login");
+  void _validatePasswords() {
+    if (passwordController.text != confirmPasswordController.text) {
+      setState(() {
+        _errorPassword = "Passwords do not match";
+      });
     } else {
-      print("User not created");
+      setState(() {
+        _errorPassword = "";
+      });
     }
   }
 }

@@ -70,6 +70,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '976214399132',
     projectId: 'betterbee-eb5e8',
     storageBucket: 'betterbee-eb5e8.appspot.com',
+    iosClientId: '976214399132-3rlhn52l1pe9bnbh5eodv0pb9fkeft4j.apps.googleusercontent.com',
     iosBundleId: 'com.betterlife.betterbee',
   );
 }

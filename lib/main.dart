@@ -1,3 +1,6 @@
+import 'package:betterbee/routes.dart';
+import 'package:betterbee/views/Home.dart';
+import 'package:betterbee/views/SignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:betterbee/views/SignIn.dart';
 
@@ -17,8 +20,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginPage(),
-    );
+    return MaterialApp(initialRoute: AppRoutes.signIn, routes: {
+      AppRoutes.signIn: (context) => const LoginPage(),
+      AppRoutes.signUp: (context) => const CreateAccountPage(),
+      AppRoutes.home: (context) => const HomePage()
+    });
   }
 }
