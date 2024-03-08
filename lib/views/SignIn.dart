@@ -50,6 +50,32 @@ class _FormSignIn extends State<FormSignIn> {
     super.dispose();
   }
 
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await GoogleSignIn().signIn();
+
+      if (googleSignInAccount == null) {
+        // User canceled the sign-in
+        return;
+      }
+
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+         await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, "/home");
+    } catch (e) {
+      print("Error signing in with Google: $e");
+      // Handle error
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,7 +101,7 @@ class _FormSignIn extends State<FormSignIn> {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 40)),
               FilledButton.icon(
-                onPressed: () {},
+                onPressed: _signInWithGoogle,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                       const Color.fromARGB(179, 250, 241, 241)),
@@ -86,11 +112,12 @@ class _FormSignIn extends State<FormSignIn> {
                     ),
                   ),
                 ),
-                icon: const Icon(
-                  // <-- Icon
-                  Icons.download,
-                  size: 24.0,
+                icon: const Image(
+                  image: AssetImage('assets/google_logo.png'),
+                  width: 24.0,
+                  height: 24.0,
                 ),
+
                 label: const Text('Sign in with Google'),
 
                 // <-- Text
