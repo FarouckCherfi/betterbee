@@ -112,10 +112,7 @@ class _FormSignIn extends State<FormSignIn> {
                     ),
                   ),
                 ),
-                icon: const Image(
-                  image: AssetImage('assets/google_logo.png'),
-                  width: 24.0,
-                  height: 24.0,
+                icon: const Icon(Icons.g_mobiledata_rounded
                 ),
 
                 label: const Text('Sign in with Google'),
