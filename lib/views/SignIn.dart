@@ -66,7 +66,7 @@ class _FormSignIn extends State<FormSignIn> {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-         await FirebaseAuth.instance.signInWithCredential(credential);
+      await FirebaseAuth.instance.signInWithCredential(credential);
 
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, "/home");
@@ -79,69 +79,112 @@ class _FormSignIn extends State<FormSignIn> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 190, left: 10, right: 10),
-        child: Form(
-            key: _formKey,
-            child: ListView(key: UniqueKey(), children: [
-              CustomFormField(
-                  labelText: "Mail",
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _mailController),
-              const Padding(padding: EdgeInsets.only(bottom: 25)),
-              CustomFormField(
-                  labelText: "Password",
-                  obscureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  controller: _passwordController),
-              const Padding(padding: EdgeInsets.only(bottom: 25)),
-              CustomButton(
-                text: "Login",
-                onPressed: _signIn,
-                backgroundColor: Colors.amber,
-              ),
-              const Padding(padding: EdgeInsets.only(bottom: 40)),
-              FilledButton.icon(
-                onPressed: _signInWithGoogle,
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(179, 250, 241, 241)),
-                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      child: Column(
+        children: [
+          // Add your image here
+          const SizedBox(height: 60),
+          Image.asset(
+            alignment: Alignment.center,
+            'assets/animals.png', // Replace with the actual path to your image
+            width: MediaQuery.of(context).size.width * 0.8,
+            // You can adjust the width as needed
+          ),
+          const SizedBox(height: 20), // Adjust the height as needed
+          Form(
+              key: _formKey,
+              child: Expanded(
+                child: ListView(
+                  key: UniqueKey(),
+                  children: [
+                    CustomFormField(
+                      labelText: "Mail",
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _mailController,
                     ),
-                  ),
-                ),
-                icon: const Icon(Icons.g_mobiledata_rounded
-                ),
-
-                label: const Text('Sign in with Google'),
-
-                // <-- Text
-              ),
-              //GoogleSignInButton(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an account?"),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/signUp');
-                    },
-                    child: const Text(
-                      "Sign Up",
-                      style: TextStyle(
-                          color: Colors.amber,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
+                    const Padding(padding: EdgeInsets.only(bottom: 25)),
+                    CustomFormField(
+                      labelText: "Password",
+                      obscureText: true,
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _passwordController,
                     ),
-                  )
-                ],
-              )
-            ])));
+                    const Padding(padding: EdgeInsets.only(bottom: 25)),
+                    CustomButton(
+                      text: "Login",
+                      onPressed: _signIn,
+                      backgroundColor: Colors.amber,
+                    ),
+                    const Padding(padding: EdgeInsets.only(bottom: 20)),
+                    const Row(children: [
+                      Expanded(
+                        child: Divider(
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'or',
+                          style: TextStyle(
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: Colors.black87,
+                        ),
+                      )
+                    ]),
+                    FilledButton.icon(
+                      onPressed: _signInWithGoogle,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(179, 140, 140, 140),
+                        ),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      icon: const Icon(Icons.g_mobiledata_rounded),
+                      label: const Text('Sign in with Google'),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Don't have an account?"),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/signUp');
+                          },
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.amber,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )),
+        ],
+      ),
+    );
   }
 
   void _signIn() async {
