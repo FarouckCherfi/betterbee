@@ -16,17 +16,17 @@ class CustomFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Colors.grey),
-            borderRadius: BorderRadius.circular(10)),
-        contentPadding: const EdgeInsets.all(10),
-      ),
-      obscureText: obscureText ?? false,
-      obscuringCharacter: "*",
-      keyboardType: keyboardType,
-      controller : controller
-    );
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(
+              borderSide: const BorderSide(width: 1, color: Colors.grey),
+              borderRadius: BorderRadius.circular(10)),
+          contentPadding: const EdgeInsets.all(10),
+          
+        ),
+        obscureText: obscureText ?? false,
+        obscuringCharacter: "*",
+        keyboardType: keyboardType,
+        controller: controller);
   }
 }

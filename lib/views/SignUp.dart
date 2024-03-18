@@ -15,18 +15,7 @@ class CreateAccountPage extends StatefulWidget {
 class _CreateAccountPage extends State<CreateAccountPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        //bottomNavigationBar: NavigationBar(
-        //  backgroundColor: Colors.amber,
-        // destinations: const <Widget>[
-        //  NavigationDestination(
-        //     icon: Icon(Icons.home_filled), label: 'Home'),
-        // NavigationDestination(
-        //     icon: Icon(Icons.notification_add), label: "Notifications"),
-        //NavigationDestination(
-        //   icon: Icon(Icons.contacts), label: "Friends"),
-        //]),
-        body: FormSignUp());
+    return const Scaffold(body: FormSignUp());
   }
 }
 
@@ -69,62 +58,73 @@ class _FormSignUp extends State<FormSignUp> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 190, left: 10, right: 10),
-        child: Form(
-            key: _formKey,
-            child: ListView(key: UniqueKey(), children: [
-              CustomFormField(
-                  labelText: "Username",
-                  keyboardType: TextInputType.name,
-                  controller: usernameController),
-              const Padding(padding: EdgeInsets.only(bottom: 25)),
-              CustomFormField(
-                  labelText: "Mail",
-                  keyboardType: TextInputType.emailAddress,
-                  controller: mailController),
-              const Padding(padding: EdgeInsets.only(bottom: 25)),
-              CustomFormField(
-                  labelText: "Password",
-                  obscureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  controller: passwordController),
-              const Padding(padding: EdgeInsets.only(bottom: 25)),
-              CustomFormField(
-                  labelText: "Confirm Password",
-                  obscureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  controller: confirmPasswordController),
-              Padding(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  child: Text(_errorPassword,
-                      style: const TextStyle(color: Colors.red))),
-              CustomButton(
-                  text: "Sign Up",
-                  onPressed: _signUp,
-                  backgroundColor: Colors.amber),
-              const Padding(padding: EdgeInsets.only(bottom: 40)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Already have an account?"),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/signIn');
-                    },
-                    child: const Text(
-                      "Sign In",
-                      style: TextStyle(
-                          color: Colors.amber,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.05,
+            left: 10,
+            right: 10),
+        child: Column(children: [
+          const SizedBox(height: 60),
+          Image.asset(
+              alignment: Alignment.center,
+              'assets/cutebee.png',
+              width: MediaQuery.of(context).size.width * 0.55),
+          Form(
+              key: _formKey,
+              child: Expanded(
+                  child: ListView(key: UniqueKey(), children: [
+                CustomFormField(
+                    labelText: "Username",
+                    keyboardType: TextInputType.name,
+                    controller: usernameController),
+                const Padding(padding: EdgeInsets.only(bottom: 25)),
+                CustomFormField(
+                    labelText: "Mail",
+                    keyboardType: TextInputType.emailAddress,
+                    controller: mailController),
+                const Padding(padding: EdgeInsets.only(bottom: 25)),
+                CustomFormField(
+                    labelText: "Password",
+                    obscureText: true,
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: passwordController),
+                const Padding(padding: EdgeInsets.only(bottom: 25)),
+                CustomFormField(
+                    labelText: "Confirm Password",
+                    obscureText: true,
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: confirmPasswordController),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: Text(_errorPassword,
+                        style: const TextStyle(color: Colors.red))),
+                CustomButton(
+                    text: "Sign Up",
+                    onPressed: _signUp,
+                    backgroundColor: Colors.amber),
+                const Padding(padding: EdgeInsets.only(bottom: 40)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Already have an account?"),
+                    const SizedBox(
+                      width: 5,
                     ),
-                  )
-                ],
-              )
-            ])));
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/signIn');
+                      },
+                      child: const Text(
+                        "Sign In",
+                        style: TextStyle(
+                            color: Colors.amber,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                    )
+                  ],
+                )
+              ])))
+        ]));
   }
 
   void _signUp() async {
@@ -132,6 +132,7 @@ class _FormSignUp extends State<FormSignUp> {
     String mail = mailController.text;
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
+    String username = usernameController.text;
 
     if (password != confirmPassword) {
       if (mounted) {
@@ -143,7 +144,7 @@ class _FormSignUp extends State<FormSignUp> {
       }
     }
     try {
-      await _auth.signUpWithEmailAndPassword(mail, password);
+      await _auth.signUpWithEmailAndPassword(mail, password, username);
       if (mounted) {
         Navigator.pushNamed(context, "/signIn");
       }

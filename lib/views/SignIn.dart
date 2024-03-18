@@ -16,16 +16,6 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        //bottomNavigationBar: NavigationBar(
-        //  backgroundColor: Colors.amber,
-        // destinations: const <Widget>[
-        //  NavigationDestination(
-        //     icon: Icon(Icons.home_filled), label: 'Home'),
-        // NavigationDestination(
-        //     icon: Icon(Icons.notification_add), label: "Notifications"),
-        //NavigationDestination(
-        //   icon: Icon(Icons.contacts), label: "Friends"),
-        //]),
         body: FormSignIn());
   }
 }
@@ -56,7 +46,6 @@ class _FormSignIn extends State<FormSignIn> {
           await GoogleSignIn().signIn();
 
       if (googleSignInAccount == null) {
-        // User canceled the sign-in
         return;
       }
 
@@ -72,14 +61,14 @@ class _FormSignIn extends State<FormSignIn> {
       Navigator.pushNamed(context, "/home");
     } catch (e) {
       print("Error signing in with Google: $e");
-      // Handle error
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 0.1, left: 10, right: 10),
       child: Column(
         children: [
           // Add your image here
