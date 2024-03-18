@@ -27,6 +27,12 @@ class FireBaseAuthServices {
     return userCredential.user;
   }
 
+  Future<String?> getCurrentUser(String uid) {
+    return _firestore.collection('users').doc(uid).get().then((value) {
+      return value.get('username');
+    });
+  }
+
   Future<dynamic> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();

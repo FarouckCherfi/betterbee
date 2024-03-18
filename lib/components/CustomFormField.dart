@@ -22,7 +22,6 @@ class CustomFormField extends StatelessWidget {
               borderSide: const BorderSide(width: 1, color: Colors.grey),
               borderRadius: BorderRadius.circular(10)),
           contentPadding: const EdgeInsets.all(10),
-          
         ),
         obscureText: obscureText ?? false,
         obscuringCharacter: "*",

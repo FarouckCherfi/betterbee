@@ -1,18 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:betterbee/components/CustomFormField.dart';
 import 'package:betterbee/components/CustomButton.dart';
 import 'package:betterbee/user_auth/firebase_auth/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:flutter/material.dart';
-
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
 
   @override
-  State<CreateAccountPage> createState() => _CreateAccountPage();
+  // ignore: library_private_types_in_public_api
+  _CreateAccountPageState createState() => _CreateAccountPageState();
 }
 
-class _CreateAccountPage extends State<CreateAccountPage> {
+class _CreateAccountPageState extends State<CreateAccountPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(body: FormSignUp());
@@ -23,19 +23,19 @@ class FormSignUp extends StatefulWidget {
   const FormSignUp({super.key});
 
   @override
-  State<FormSignUp> createState() => _FormSignUp();
+  State<FormSignUp> createState() => _FormSignUpState();
 }
 
-class _FormSignUp extends State<FormSignUp> {
+class _FormSignUpState extends State<FormSignUp> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
   String _errorPassword = "";
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final FireBaseAuthServices _auth = FireBaseAuthServices();
+  final FireBaseAuthServices _auth =
+      FireBaseAuthServices(); // Assurez-vous que cette classe existe et est correctement implémentée
 
   @override
   void initState() {
@@ -48,9 +48,7 @@ class _FormSignUp extends State<FormSignUp> {
   void dispose() {
     usernameController.dispose();
     mailController.dispose();
-    passwordController.removeListener(_validatePasswords);
     passwordController.dispose();
-    confirmPasswordController.removeListener(_validatePasswords);
     confirmPasswordController.dispose();
     super.dispose();
   }
@@ -58,73 +56,72 @@ class _FormSignUp extends State<FormSignUp> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.05,
-            left: 10,
-            right: 10),
-        child: Column(children: [
-          const SizedBox(height: 60),
-          Image.asset(
-              alignment: Alignment.center,
-              'assets/cutebee.png',
-              width: MediaQuery.of(context).size.width * 0.55),
-          Form(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height * 0.05,
+        left: 10,
+        right: 10,
+      ),
+      child: SingleChildScrollView(
+        // Utilisez SingleChildScrollView
+        child: Column(
+          children: [
+            const SizedBox(height: 60),
+            Image.asset(
+              'assets/cutebee.png', // Assurez-vous que ce chemin d'accès est correct
+              width: MediaQuery.of(context).size.width * 0.55,
+            ),
+            const SizedBox(height: 20),
+            Form(
               key: _formKey,
-              child: Expanded(
-                  child: ListView(key: UniqueKey(), children: [
-                CustomFormField(
+              child: Column(
+                // Utilisez Column au lieu de ListView
+                children: [
+                  CustomFormField(
                     labelText: "Username",
                     keyboardType: TextInputType.name,
-                    controller: usernameController),
-                const Padding(padding: EdgeInsets.only(bottom: 25)),
-                CustomFormField(
+                    controller: usernameController,
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 25)),
+                  CustomFormField(
                     labelText: "Mail",
                     keyboardType: TextInputType.emailAddress,
-                    controller: mailController),
-                const Padding(padding: EdgeInsets.only(bottom: 25)),
-                CustomFormField(
+                    controller: mailController,
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 25)),
+                  CustomFormField(
                     labelText: "Password",
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
-                    controller: passwordController),
-                const Padding(padding: EdgeInsets.only(bottom: 25)),
-                CustomFormField(
+                    controller: passwordController,
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 25)),
+                  CustomFormField(
                     labelText: "Confirm Password",
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
-                    controller: confirmPasswordController),
-                Padding(
+                    controller: confirmPasswordController,
+                  ),
+                  Padding(
                     padding: const EdgeInsets.only(bottom: 25),
-                    child: Text(_errorPassword,
-                        style: const TextStyle(color: Colors.red))),
-                CustomButton(
+                    child: Text(
+                      _errorPassword,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  CustomButton(
                     text: "Sign Up",
                     onPressed: _signUp,
-                    backgroundColor: Colors.amber),
-                const Padding(padding: EdgeInsets.only(bottom: 40)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Already have an account?"),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/signIn');
-                      },
-                      child: const Text(
-                        "Sign In",
-                        style: TextStyle(
-                            color: Colors.amber,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
-                      ),
-                    )
-                  ],
-                )
-              ])))
-        ]));
+                    backgroundColor: Colors.amber,
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 40)),
+                  _signInRedirect(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _signUp() async {
@@ -179,14 +176,33 @@ class _FormSignUp extends State<FormSignUp> {
   }
 
   void _validatePasswords() {
-    if (passwordController.text != confirmPasswordController.text) {
-      setState(() {
-        _errorPassword = "Passwords do not match";
-      });
-    } else {
-      setState(() {
-        _errorPassword = "";
-      });
-    }
+    setState(() {
+      _errorPassword = passwordController.text != confirmPasswordController.text
+          ? "Passwords do not match"
+          : "";
+    });
+  }
+
+  Widget _signInRedirect() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Already have an account?"),
+        const SizedBox(width: 5),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/signIn');
+          },
+          child: const Text(
+            "Sign In",
+            style: TextStyle(
+              color: Colors.amber,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

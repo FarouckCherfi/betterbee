@@ -2,7 +2,8 @@ import 'package:betterbee/components/CustomNavigationBar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String username;
+  const HomePage({super.key, required this.username});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,33 +14,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: const CustomNavigationBar(),
-      body: GestureDetector(
-        onPanUpdate: (details) {
-          setState(() {
-            _offset += details.delta;
-          });
-        },
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Transform.translate(
-                offset: _offset,
-                child: Container(
-                  color: Colors.white, // Adjust as needed
-                  child: const Center(
-                    child: Text(
-                      'Drag Me!',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
+    print(widget.username);
+    return PopScope(
+        canPop: false,
+        child: Scaffold(
+            bottomNavigationBar: const CustomNavigationBar(),
+            body: Stack(children: [
+              // Background Image
+              Image.asset(
+                'assets/BackGround3.jpg',
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            ])));
   }
 }
