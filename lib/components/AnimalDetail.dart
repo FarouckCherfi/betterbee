@@ -7,6 +7,6 @@ class AnimalDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("waiting");
+    return const Center(child: Text("waiting"));
   }
 }

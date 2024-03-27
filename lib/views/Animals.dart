@@ -52,7 +52,17 @@ class _Animals extends State<Animals> {
         }).toList(),
       );
     } else {
-      return AnimalDetail(animal: selectedAnimal);
+      return Column(children: [
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
+        ElevatedButton(
+            onPressed: () {
+              setState(() {
+                showdetails = false;
+              });
+            },
+            child: const Text('Back')),
+        Row(children: [AnimalDetail(animal: selectedAnimal)]),
+      ]);
     }
   }
 }

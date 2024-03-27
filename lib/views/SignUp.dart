@@ -67,7 +67,7 @@ class _FormSignUpState extends State<FormSignUp> {
           children: [
             const SizedBox(height: 60),
             Image.asset(
-              'assets/animals/bee.png', // Assurez-vous que ce chemin d'accès est correct
+              'assets/animals/Bee.png', // Assurez-vous que ce chemin d'accès est correct
               width: MediaQuery.of(context).size.width * 0.55,
             ),
             const SizedBox(height: 20),
