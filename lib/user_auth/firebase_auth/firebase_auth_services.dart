@@ -44,8 +44,18 @@ class FireBaseAuthServices {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final User? firebaseUser = userCredential.user;
 
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      if (firebaseUser != null) {
+        String uid = firebaseUser.uid;
+        String username = googleUser?.displayName ?? "New User";
+        await _firestore.collection('users').doc(uid).set({
+          'username': username,
+        });
+      }
+      return userCredential.user;
     } on Exception catch (e) {
       // TODO
       print('exception->$e');

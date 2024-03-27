@@ -46,25 +46,18 @@ class _FormSignIn extends State<FormSignIn> {
 
   Future<void> _signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await GoogleSignIn().signIn();
-
-      if (googleSignInAccount == null) {
-        return;
+      User? user = await _auth.signInWithGoogle();
+      if (mounted) {
+        Navigator.pushNamed(context, "/home", arguments: {'username': user});
       }
-
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-
-      // ignore: use_build_context_synchronously
-      Navigator.pushNamed(context, "/home");
     } catch (e) {
-      print("Error signing in with Google: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content:
+              Text("An error occured with your Google account, please retry"),
+          backgroundColor: Colors.red,
+        ));
+      }
     }
   }
 
@@ -184,10 +177,8 @@ class _FormSignIn extends State<FormSignIn> {
 
     try {
       User? user = await _auth.signInWithEmailAndPassword(mail, password);
-      String? username = await _auth.getCurrentUser(user!.uid);
       if (mounted) {
-        Navigator.pushNamed(context, "/home",
-            arguments: {'username': username});
+        Navigator.pushNamed(context, "/home", arguments: {'username': user});
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {

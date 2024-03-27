@@ -1,32 +1,23 @@
-import 'package:betterbee/components/CustomNavigationBar.dart';
+import 'package:betterbee/components/AnimalCard.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  final String username;
-  const HomePage({super.key, required this.username});
+class MyHome extends StatefulWidget {
+
+  const MyHome({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MyHome> createState() => _MyHome();
 }
 
-class _HomePageState extends State<HomePage> {
-  Offset _offset = Offset.zero;
-
+class _MyHome extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
-    print(widget.username);
-    return PopScope(
-        canPop: false,
-        child: Scaffold(
-            bottomNavigationBar: const CustomNavigationBar(),
-            body: Stack(children: [
-              // Background Image
-              Image.asset(
-                'assets/BackGround3.jpg',
-                fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-              ),
-            ])));
+    return Image.asset(
+      'assets/BackGround3.jpeg',
+      fit: BoxFit.cover,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+    );
   }
 }
+

@@ -1,10 +1,13 @@
 import 'package:betterbee/routes.dart';
-import 'package:betterbee/views/Home.dart';
+import 'package:betterbee/user_auth/provider/Provider.dart';
+import 'package:betterbee/views/Animals.dart';
+import 'package:betterbee/views/PrincipalView.dart';
 import 'package:betterbee/views/SignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:betterbee/views/SignIn.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -12,7 +15,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp
+    (ChangeNotifierProvider (
+      create : (context) => UserProvider(), 
+      child : const MyApp())
+    );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +30,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(initialRoute: AppRoutes.signIn, routes: {
       AppRoutes.signIn: (context) => const LoginPage(),
       AppRoutes.signUp: (context) => const CreateAccountPage(),
-      AppRoutes.home: (context) => const HomePage(username: '',)
+      AppRoutes.home: (context) => const PrincipalViewPage(),
+      AppRoutes.animals: (context) => const Animals(),
     });
   }
 }
