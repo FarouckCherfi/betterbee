@@ -1,9 +1,11 @@
 import 'package:betterbee/components/CustomButton.dart';
 import 'package:betterbee/components/CustomFormField.dart';
 import 'package:betterbee/user_auth/firebase_auth/firebase_auth_services.dart';
+import 'package:betterbee/user_auth/provider/Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -48,7 +50,8 @@ class _FormSignIn extends State<FormSignIn> {
     try {
       User? user = await _auth.signInWithGoogle();
       if (mounted) {
-        Navigator.pushNamed(context, "/home", arguments: {'username': user});
+        Provider.of<UserProvider>(context, listen: false).setUid(user!.uid);
+        Navigator.pushNamed(context, "/home");
       }
     } catch (e) {
       if (mounted) {
@@ -178,7 +181,8 @@ class _FormSignIn extends State<FormSignIn> {
     try {
       User? user = await _auth.signInWithEmailAndPassword(mail, password);
       if (mounted) {
-        Navigator.pushNamed(context, "/home", arguments: {'username': user});
+        Provider.of<UserProvider>(context, listen: false).setUid(user!.uid);
+        Navigator.pushNamed(context, "/home");
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
