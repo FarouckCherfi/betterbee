@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:betterbee/components/CustomFormField.dart';
 import 'package:betterbee/components/CustomButton.dart';
-import 'package:betterbee/user_auth/firebase_auth/firebase_auth_services.dart';
+import 'package:betterbee/firebase/firebase_auth/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CreateAccountPage extends StatefulWidget {

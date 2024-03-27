@@ -1,5 +1,4 @@
-import 'package:betterbee/components/AnimalCard.dart';
-import 'package:betterbee/user_auth/provider/Provider.dart';
+import 'package:betterbee/Provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

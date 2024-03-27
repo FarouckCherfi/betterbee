@@ -1,7 +1,7 @@
 import 'package:betterbee/components/CustomButton.dart';
 import 'package:betterbee/components/CustomFormField.dart';
-import 'package:betterbee/user_auth/firebase_auth/firebase_auth_services.dart';
-import 'package:betterbee/user_auth/provider/Provider.dart';
+import 'package:betterbee/firebase/firebase_auth/firebase_auth_services.dart';
+import 'package:betterbee/Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -46,7 +46,7 @@ class _FormSignIn extends State<FormSignIn> {
     super.dispose();
   }
 
-  Future<void> _signInWithGoogle() async {
+  void _signInWithGoogle() async {
     try {
       User? user = await _auth.signInWithGoogle();
       if (mounted) {

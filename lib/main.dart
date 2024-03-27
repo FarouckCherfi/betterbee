@@ -1,5 +1,5 @@
 import 'package:betterbee/routes.dart';
-import 'package:betterbee/user_auth/provider/Provider.dart';
+import 'package:betterbee/Provider.dart';
 import 'package:betterbee/views/Animals.dart';
 import 'package:betterbee/views/PrincipalView.dart';
 import 'package:betterbee/views/SignUp.dart';
@@ -15,11 +15,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp
-    (ChangeNotifierProvider (
-      create : (context) => UserProvider(), 
-      child : const MyApp())
-    );
+  runApp(ChangeNotifierProvider(
+      create: (context) => UserProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

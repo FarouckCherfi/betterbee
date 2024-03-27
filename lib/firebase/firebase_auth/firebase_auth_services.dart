@@ -5,6 +5,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FireBaseAuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final Map<String, bool> _initialAnimals = {
+    "Bee": false,
+    "Elephant": false,
+    "Giraffe": false,
+    "Zebra": false,
+    "Tiger": false,
+    "Monkey": false,
+    "Cat": false,
+    "Panda": false,
+    "Koala": false,
+    "Hippo": false
+  };
 
   Future<User?> signUpWithEmailAndPassword(
       String email, String password, String username) async {
@@ -15,6 +27,7 @@ class FireBaseAuthServices {
       User? user = userCredential.user;
       await _firestore.collection('users').doc(user!.uid).set({
         'username': username,
+        'animals': _initialAnimals,
       });
     }
     return userCredential.user;
@@ -25,12 +38,6 @@ class FireBaseAuthServices {
     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
     return userCredential.user;
-  }
-
-  Future<String?> getCurrentUser(String uid) {
-    return _firestore.collection('users').doc(uid).get().then((value) {
-      return value.get('username');
-    });
   }
 
   Future<dynamic> signInWithGoogle() async {
@@ -51,9 +58,15 @@ class FireBaseAuthServices {
       if (firebaseUser != null) {
         String uid = firebaseUser.uid;
         String username = googleUser?.displayName ?? "New User";
-        await _firestore.collection('users').doc(uid).set({
-          'username': username,
-        });
+        final docSnapShot = await _firestore.collection('users').doc(uid).get();
+
+        // Première connexion sinon on ne modifie pas la BDD
+        if (!docSnapShot.exists) {
+          await _firestore.collection('users').doc(uid).set({
+            'username': username,
+            'animals': _initialAnimals,
+          });
+        }
       }
       return userCredential.user;
     } on Exception catch (e) {
