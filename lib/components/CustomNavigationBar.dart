@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
 class CustomNavigationBar extends StatelessWidget {
@@ -10,7 +11,7 @@ class CustomNavigationBar extends StatelessWidget {
         destinations: const <Widget>[
           NavigationDestination(icon: Icon(Icons.home_filled), label: 'Home'),
           NavigationDestination(
-              icon: Icon(Icons.notification_add), label: "Notifications"),
+              icon: Icon(Icons.park), label: "Animals"),
           NavigationDestination(icon: Icon(Icons.contacts), label: "Friends"),
           //NavigationDestination(icon: Icon(Icons.logout), label: "Logout")
         ]);

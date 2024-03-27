@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(initialRoute: AppRoutes.signIn, routes: {
       AppRoutes.signIn: (context) => const LoginPage(),
       AppRoutes.signUp: (context) => const CreateAccountPage(),
-      AppRoutes.home: (context) => const HomePage()
+      AppRoutes.home: (context) => const HomePage(username: '',)
     });
   }
 }
