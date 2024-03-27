@@ -1,8 +1,9 @@
 import 'package:betterbee/components/AnimalCard.dart';
+import 'package:betterbee/user_auth/provider/Provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyHome extends StatefulWidget {
-
   const MyHome({super.key});
 
   @override
@@ -12,6 +13,8 @@ class MyHome extends StatefulWidget {
 class _MyHome extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
+    String? uid = Provider.of<UserProvider>(context).uid;
+
     return Image.asset(
       'assets/BackGround3.jpeg',
       fit: BoxFit.cover,
@@ -20,4 +23,3 @@ class _MyHome extends State<MyHome> {
     );
   }
 }
-

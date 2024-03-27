@@ -57,7 +57,6 @@ class FireBaseAuthServices {
       }
       return userCredential.user;
     } on Exception catch (e) {
-      // TODO
       print('exception->$e');
     }
   }
