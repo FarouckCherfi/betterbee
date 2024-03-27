@@ -20,4 +20,22 @@ class FireBaseCallServices {
       return null;
     }
   }
+
+  Future<Map<String, dynamic>?> getDescriptionAndHints(String animal) async {
+    try {
+      DocumentSnapshot animalDoc =
+          await _firestore.collection('animals').doc(animal).get();
+
+      if (animalDoc.exists) {
+        Map<String, dynamic> animalData =
+            animalDoc.data() as Map<String, dynamic>;
+
+        return animalData;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 }

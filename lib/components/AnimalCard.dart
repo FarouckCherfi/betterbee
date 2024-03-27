@@ -22,7 +22,7 @@ class AnimalCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            animal.key,
+            animal.value ? animal.key : "???",
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ],

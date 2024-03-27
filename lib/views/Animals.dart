@@ -16,6 +16,8 @@ class _Animals extends State<Animals> {
   bool showdetails = false;
   late MapEntry<String, dynamic> selectedAnimal;
   Map<String, dynamic> animalList = {};
+  final FireBaseCallServices call = FireBaseCallServices();
+
 
   @override
   void initState() {
@@ -25,7 +27,6 @@ class _Animals extends State<Animals> {
 
   void getAnimals() async {
     String? uid = Provider.of<UserProvider>(context, listen: false).uid;
-    final FireBaseCallServices call = FireBaseCallServices();
 
     Map<String, dynamic>? animals = await call.getAnimals(uid!);
     if (animals != null) {
@@ -54,14 +55,16 @@ class _Animals extends State<Animals> {
     } else {
       return Column(children: [
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
-        ElevatedButton(
-            onPressed: () {
-              setState(() {
-                showdetails = false;
-              });
-            },
-            child: const Text('Back')),
-        Row(children: [AnimalDetail(animal: selectedAnimal)]),
+        Row(children: [
+          ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  showdetails = false;
+                });
+              },
+              child: const Text('Back'))
+        ]),
+        AnimalDetail(animal: selectedAnimal),
       ]);
     }
   }
