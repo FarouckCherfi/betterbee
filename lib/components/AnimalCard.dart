@@ -15,7 +15,7 @@ class AnimalCard extends StatelessWidget {
           Image.asset(
             animal.value
                 ? 'assets/animals/$name.png'
-                : 'assets/animals/notUnlocked.png', // Replace with your image path
+                : 'assets/animals/${name}_gris.png', // Replace with your image path
             width: 150,
             height: 150,
             fit: BoxFit.cover,

@@ -17,6 +17,7 @@ void main() async {
   );
   runApp(ChangeNotifierProvider(
       create: (context) => UserProvider(), child: const MyApp()));
+  
 }
 
 class MyApp extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'package:betterbee/views/Animals.dart';
 import 'package:betterbee/views/Friends.dart';
 import 'package:betterbee/views/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PrincipalViewPage extends StatefulWidget {
   const PrincipalViewPage({super.key});
@@ -21,11 +22,33 @@ class _PrincipalViewPage extends State<PrincipalViewPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp
+    ]);
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PopScope(
         canPop: false,
         child: Scaffold(
-            bottomNavigationBar: CustomNavigationBar(
+            extendBodyBehindAppBar: true,
+            appBar: CustomNavigationBar(
               selectedIndex: _selectedIndex,
               onItemTapped: _onItemTapped,
             ),
