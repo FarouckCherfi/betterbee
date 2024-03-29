@@ -6,7 +6,7 @@ class FireBaseAuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Map<String, bool> _initialAnimals = {
-    "Bee": false,
+    "Bee": true,
     "Elephant": false,
     "Giraffe": false,
     "Zebra": false,
