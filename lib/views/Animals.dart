@@ -40,7 +40,7 @@ class _Animals extends State<Animals> {
   Widget build(BuildContext context) {
     if (!showdetails) {
       return GridView.count(
-        crossAxisCount: 2,
+        crossAxisCount: 3,
         children: animalList.entries.map((entry) {
           return InkWell(
               onTap: () {

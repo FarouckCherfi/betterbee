@@ -1,3 +1,4 @@
+import 'package:betterbee/Animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireBaseCallServices {
@@ -19,6 +20,20 @@ class FireBaseCallServices {
     } catch (e) {
       return null;
     }
+  }
+
+
+
+  Future<List<Animal>> getDataBaseAnimals() async {
+    
+    CollectionReference animalsCollection = _firestore.collection('animals');
+    
+      QuerySnapshot snapshot = await animalsCollection.get();
+      List<Animal> animals = snapshot.docs.map((doc) {
+        return Animal.fromFirestore(doc);
+      }).toList();
+      return animals;
+     
   }
 
   Future<Map<String, dynamic>?> getDescriptionAndHints(String animal) async {
