@@ -13,11 +13,9 @@ class Animals extends StatefulWidget {
 }
 
 class _Animals extends State<Animals> {
-  bool showdetails = false;
   late MapEntry<String, dynamic> selectedAnimal;
   Map<String, dynamic> animalList = {};
   final FireBaseCallServices call = FireBaseCallServices();
-
 
   @override
   void initState() {
@@ -26,7 +24,7 @@ class _Animals extends State<Animals> {
   }
 
   void getAnimals() async {
-    String? uid = Provider.of<UserProvider>(context, listen: false).uid;
+    String? uid = Provider.of<AppProvider>(context, listen: false).uid;
 
     Map<String, dynamic>? animals = await call.getAnimals(uid!);
     if (animals != null) {
@@ -38,34 +36,26 @@ class _Animals extends State<Animals> {
 
   @override
   Widget build(BuildContext context) {
-    if (!showdetails) {
-      return GridView.count(
-        crossAxisCount: 3,
-        children: animalList.entries.map((entry) {
-          return InkWell(
-              onTap: () {
-                setState(() {
-                  showdetails = true;
-                  selectedAnimal = entry;
-                });
-              },
-              child: AnimalCard(animal: entry));
-        }).toList(),
-      );
-    } else {
-      return Column(children: [
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
-        Row(children: [
-          ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  showdetails = false;
-                });
-              },
-              child: const Text('Back'))
-        ]),
-        AnimalDetail(animal: selectedAnimal),
-      ]);
-    }
+    return Provider.of<AppProvider>(context).detail
+        ? Column(children: [
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+            AnimalDetail(animal: selectedAnimal),
+          ])
+        : GridView.count(
+            crossAxisCount: 3,
+            children: animalList.entries.map((entry) {
+              return InkWell(
+                  onTap: () {
+                    setState(() {
+                      Provider.of<AppProvider>(listen: false, context)
+                          .setSelectedAnimal(true);
+                      Provider.of<AppProvider>(listen: false, context)
+                          .setDetail(true);
+                      selectedAnimal = entry;
+                    });
+                  },
+                  child: AnimalCard(animal: entry));
+            }).toList(),
+          );
   }
 }

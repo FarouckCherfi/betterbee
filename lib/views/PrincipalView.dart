@@ -1,9 +1,12 @@
+import 'package:betterbee/Provider.dart';
+import 'package:betterbee/components/AnimalDetail.dart';
 import 'package:betterbee/components/CustomNavigationBar.dart';
 import 'package:betterbee/views/Animals.dart';
 import 'package:betterbee/views/Friends.dart';
 import 'package:betterbee/views/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class PrincipalViewPage extends StatefulWidget {
   const PrincipalViewPage({super.key});
@@ -32,13 +35,7 @@ class _PrincipalViewPage extends State<PrincipalViewPage> {
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.portraitUp
-    ]);
-
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     super.dispose();
   }
 
@@ -55,7 +52,7 @@ class _PrincipalViewPage extends State<PrincipalViewPage> {
             body: Stack(children: [
               if (_selectedIndex == 0) const MyHome(),
               if (_selectedIndex == 1) const Animals(),
-              if (_selectedIndex == 2) const Friends()
+              if (_selectedIndex == 2) const Friends(),
             ])));
   }
 }

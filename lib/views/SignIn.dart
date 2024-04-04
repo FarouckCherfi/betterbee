@@ -47,8 +47,6 @@ class _FormSignIn extends State<FormSignIn> {
   void dispose() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp
     ]);
     _mailController.dispose();
@@ -62,7 +60,7 @@ class _FormSignIn extends State<FormSignIn> {
     try {
       User? user = await _auth.signInWithGoogle();
       if (mounted) {
-        Provider.of<UserProvider>(context, listen: false).setUid(user!.uid);
+        Provider.of<AppProvider>(context, listen: false).setUid(user!.uid);
         Navigator.pushNamed(context, "/home");
       }
     } catch (e) {
@@ -193,7 +191,7 @@ class _FormSignIn extends State<FormSignIn> {
     try {
       User? user = await _auth.signInWithEmailAndPassword(mail, password);
       if (mounted) {
-        Provider.of<UserProvider>(context, listen: false).setUid(user!.uid);
+        Provider.of<AppProvider>(context, listen: false).setUid(user!.uid);
         Navigator.pushNamed(context, "/home");
       }
     } on FirebaseAuthException catch (e) {

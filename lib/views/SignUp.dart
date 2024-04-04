@@ -3,6 +3,7 @@ import 'package:betterbee/components/CustomFormField.dart';
 import 'package:betterbee/components/CustomButton.dart';
 import 'package:betterbee/firebase/firebase_auth/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -39,6 +40,8 @@ class _FormSignUpState extends State<FormSignUp> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     super.initState();
     passwordController.addListener(_validatePasswords);
     confirmPasswordController.addListener(_validatePasswords);
@@ -46,6 +49,8 @@ class _FormSignUpState extends State<FormSignUp> {
 
   @override
   void dispose() {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeRight, DeviceOrientation.portraitUp]);
     usernameController.dispose();
     mailController.dispose();
     passwordController.dispose();

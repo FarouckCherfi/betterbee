@@ -22,18 +22,24 @@ class FireBaseCallServices {
     }
   }
 
-
+  Future<void> setAnimal(String uid, String animal) async {
+    try {
+      DocumentReference userDoc = _firestore.collection('users').doc(uid);
+      await userDoc.update({'animals.$animal': true});
+      return;
+    } catch (e) {
+      return;
+    }
+  }
 
   Future<List<Animal>> getDataBaseAnimals() async {
-    
     CollectionReference animalsCollection = _firestore.collection('animals');
-    
-      QuerySnapshot snapshot = await animalsCollection.get();
-      List<Animal> animals = snapshot.docs.map((doc) {
-        return Animal.fromFirestore(doc);
-      }).toList();
-      return animals;
-     
+
+    QuerySnapshot snapshot = await animalsCollection.get();
+    List<Animal> animals = snapshot.docs.map((doc) {
+      return Animal.fromFirestore(doc);
+    }).toList();
+    return animals;
   }
 
   Future<Map<String, dynamic>?> getDescriptionAndHints(String animal) async {

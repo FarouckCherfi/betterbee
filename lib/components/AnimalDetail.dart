@@ -1,5 +1,7 @@
+import 'package:betterbee/Provider.dart';
 import 'package:betterbee/firebase/firebase_call/firebase_call_services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AnimalDetail extends StatefulWidget {
   final MapEntry<String, dynamic> animal;
@@ -39,25 +41,28 @@ class _AnimalDetail extends State<AnimalDetail> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Column(children: [
+    return Row(children: [
       Image.asset(
         widget.animal.value
             ? 'assets/animals/$name.png'
             : 'assets/animals/${name}_gris.png', // Replace with your image path
-        width: 400,
-        height: 400,
+        width: MediaQuery.of(context).size.width * 0.3,
+        height: MediaQuery.of(context).size.height * 0.7,
         fit: BoxFit.cover,
       ),
-      const SizedBox(height: 8),
-      Text(
-        widget.animal.value ? widget.animal.key : "???",
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 18),
-      widget.animal.value
-          ? Text(informations["description"])
-          : Text(informations["hint"]),
-      Text(informations["hint2"])
+      Column(children: [
+        Text(
+          widget.animal.value ? widget.animal.key : "???",
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        widget.animal.value
+            ? Text(informations["description"])
+            : Text(informations["hint"]),
+        Text(informations["hint2"])
+      ])
     ]);
   }
 }

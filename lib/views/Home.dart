@@ -37,7 +37,7 @@ class _MyHome extends State<MyHome> {
   }
 
   void getUserAnimals() async {
-    String? uid = Provider.of<UserProvider>(context, listen: false).uid;
+    String? uid = Provider.of<AppProvider>(context, listen: false).uid;
 
     Map<String, dynamic>? animals = await call.getAnimals(uid!);
     if (animals != null) {
@@ -49,7 +49,7 @@ class _MyHome extends State<MyHome> {
 
   @override
   Widget build(BuildContext context) {
-    String? uid = Provider.of<UserProvider>(context).uid;
+    String? uid = Provider.of<AppProvider>(context).uid;
 
     Animal? getAnimalDetails(String name) {
       for (Animal animal in dataBaseAnimals) {
