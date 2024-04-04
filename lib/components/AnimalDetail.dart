@@ -43,7 +43,7 @@ class _AnimalDetail extends State<AnimalDetail> {
       Image.asset(
         widget.animal.value
             ? 'assets/animals/$name.png'
-            : 'assets/animals/notUnlocked.png', // Replace with your image path
+            : 'assets/animals/${name}_gris.png', // Replace with your image path
         width: 400,
         height: 400,
         fit: BoxFit.cover,

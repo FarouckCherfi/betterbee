@@ -4,6 +4,7 @@ import 'package:betterbee/firebase/firebase_auth/firebase_auth_services.dart';
 import 'package:betterbee/Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -37,7 +38,19 @@ class _FormSignIn extends State<FormSignIn> {
   final FireBaseAuthServices _auth = FireBaseAuthServices();
 
   @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
+
+  @override
   void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp
+    ]);
     _mailController.dispose();
     _passwordController.dispose();
     _mailFocusNode.dispose();
