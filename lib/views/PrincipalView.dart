@@ -1,11 +1,12 @@
 import 'package:betterbee/Provider.dart';
-import 'package:betterbee/components/AnimalDetail.dart';
 import 'package:betterbee/components/CustomNavigationBar.dart';
+import 'package:betterbee/healthkit/healthkit.dart';
 import 'package:betterbee/views/Animals.dart';
 import 'package:betterbee/views/Friends.dart';
 import 'package:betterbee/views/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:health/health.dart';
 import 'package:provider/provider.dart';
 
 class PrincipalViewPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class PrincipalViewPage extends StatefulWidget {
 
 class _PrincipalViewPage extends State<PrincipalViewPage> {
   int _selectedIndex = 0;
+  final UtilityHealth _healthkit = UtilityHealth();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -35,12 +37,18 @@ class _PrincipalViewPage extends State<PrincipalViewPage> {
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final String? user = Provider.of<AppProvider>(context).uid;
+    _healthkit.authorize();
+    _healthkit.fetchDataTotal(user!, HealthDataType.FLIGHTS_CLIMBED);
+    _healthkit.fetchDataTotal(user!, HealthDataType.STEPS);
+
     return PopScope(
         canPop: false,
         child: Scaffold(

@@ -112,7 +112,7 @@ class CustomNavigationBar extends StatelessWidget
                 const Padding(
                   padding:
                       EdgeInsets.only(top: 2.0), // Ajustez selon vos besoins
-                  child: Text('Contacts', style: TextStyle(fontSize: 12)),
+                  child: Text('Friends', style: TextStyle(fontSize: 12)),
                 ),
               ],
             ),

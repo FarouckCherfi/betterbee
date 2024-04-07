@@ -50,7 +50,7 @@ class _AnimalDetail extends State<AnimalDetail> {
         height: MediaQuery.of(context).size.height * 0.7,
         fit: BoxFit.cover,
       ),
-      Column(children: [
+      Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
           widget.animal.value ? widget.animal.key : "???",
           style: const TextStyle(

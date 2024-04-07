@@ -45,10 +45,8 @@ class _FormSignIn extends State<FormSignIn> {
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.portraitUp
-    ]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeRight, DeviceOrientation.portraitUp]);
     _mailController.dispose();
     _passwordController.dispose();
     _mailFocusNode.dispose();
